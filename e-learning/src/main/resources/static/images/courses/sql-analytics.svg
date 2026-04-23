@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">SQL Analytics Course Cover</title>
+  <desc id="desc">Data-themed blue and cream cover for a SQL analytics course.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f1c30"/>
+      <stop offset="100%" stop-color="#224b70"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <circle cx="180" cy="120" r="120" fill="#ffffff" fill-opacity="0.06"/>
+  <circle cx="1000" cy="700" r="200" fill="#ffffff" fill-opacity="0.05"/>
+  <rect x="110" y="122" width="370" height="430" rx="40" fill="#fdf8f1"/>
+  <text x="160" y="230" fill="#16253a" font-size="62" font-family="Georgia, serif" font-weight="700">SQL</text>
+  <text x="160" y="290" fill="#16253a" font-size="62" font-family="Georgia, serif" font-weight="700">Analytics</text>
+  <text x="160" y="348" fill="#67717b" font-size="26" font-family="Trebuchet MS, sans-serif">Queries, metrics, insight design</text>
+  <rect x="560" y="160" width="520" height="84" rx="20" fill="#fdf8f1" fill-opacity="0.1"/>
+  <rect x="560" y="282" width="420" height="84" rx="20" fill="#fdf8f1" fill-opacity="0.16"/>
+  <rect x="560" y="404" width="580" height="84" rx="20" fill="#cf6b3d"/>
+  <rect x="560" y="526" width="300" height="84" rx="20" fill="#fdf8f1" fill-opacity="0.12"/>
+  <text x="606" y="459" fill="#fffaf4" font-size="28" font-family="Trebuchet MS, sans-serif">From raw rows to readable decisions</text>
+</svg>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+    <link rel="stylesheet" th:href="@{/css/site.css}">
+</head>
+<body class="app-body app-login">
+<main class="login-shell">
+    <section class="login-panel">
+        <div class="login-copy">
+            <p class="eyebrow">Inscription</p>
+            <h1 th:text="${cours != null ? cours.titre : 'Rejoindre ce cours'}">Rejoindre ce cours</h1>
+            <p class="lead">Un clic et tu ajoutes ce cours à ton parcours.</p>
+            <a class="button-secondary compact-button" th:href="@{/catalogue}">Retour au catalogue</a>
+        </div>
+
+        <form class="login-form" th:action="@{/inscrire}" method="post">
+            <input type="hidden" name="cours.id" th:value="${cours.id}"/>
+            <button class="button-primary wide-button" type="submit">S'inscrire</button>
+        </form>
+    </section>
+</main>
+<script type="module" th:src="@{/js/app/ambient.js}"></script>
+</body>
+</html>

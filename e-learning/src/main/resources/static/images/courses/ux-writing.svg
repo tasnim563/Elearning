@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">UX Writing Course Cover</title>
+  <desc id="desc">Editorial style teal and cream cover for a UX writing course.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#12383d"/>
+      <stop offset="100%" stop-color="#2f6f72"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <rect x="80" y="86" width="1040" height="628" rx="42" fill="#fbf6ef"/>
+  <rect x="120" y="128" width="300" height="10" rx="5" fill="#cf6b3d"/>
+  <text x="120" y="235" fill="#18353a" font-size="66" font-family="Georgia, serif" font-weight="700">UX Writing</text>
+  <text x="120" y="292" fill="#5a665f" font-size="30" font-family="Trebuchet MS, sans-serif">Content that guides instead of confusing</text>
+  <rect x="120" y="358" width="420" height="220" rx="34" fill="#e7d3bf"/>
+  <rect x="580" y="358" width="500" height="96" rx="24" fill="#18353a"/>
+  <rect x="580" y="482" width="360" height="96" rx="24" fill="#cf6b3d"/>
+  <text x="624" y="417" fill="#fbf6ef" font-size="28" font-family="Trebuchet MS, sans-serif">Clear labels</text>
+  <text x="624" y="471" fill="#5a665f" font-size="22" font-family="Trebuchet MS, sans-serif">Navigation, empty states, calls to action</text>
+  <text x="624" y="541" fill="#fbf6ef" font-size="28" font-family="Trebuchet MS, sans-serif">Better product tone</text>
+</svg>

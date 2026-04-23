@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progression</title>
+    <link rel="stylesheet" th:href="@{/css/site.css}">
+</head>
+<body class="app-body app-progress">
+<div class="app-shell">
+    <aside class="sidebar">
+        <a class="brand-lockup" th:href="@{/}">
+            <span class="brand-badge">EL</span>
+            <span>
+                <strong>E-Learning Studio</strong>
+                <small>Suivi d'apprentissage</small>
+            </span>
+        </a>
+
+        <nav class="sidebar-nav">
+            <a class="sidebar-link" th:href="@{/}">Accueil</a>
+            <a class="sidebar-link" th:href="@{/catalogue}">Catalogue</a>
+            <a class="sidebar-link active" th:href="@{/progression}">Progression</a>
+            <a class="sidebar-link" th:href="@{/login}">Connexion</a>
+        </nav>
+
+        <section class="sidebar-panel">
+            <p class="panel-label">Rythme</p>
+            <h3>Suivi visuel</h3>
+            <p>Un tableau simple pour voir où tu en es, sans détails inutiles.</p>
+        </section>
+    </aside>
+
+    <main class="content-shell">
+        <section class="progress-hero">
+            <div class="progress-copy">
+                <p class="eyebrow">Trajectoire</p>
+                <h1>Ton voyage, en un regard.</h1>
+                <p class="lead">Une progression lisible, avec juste ce qu’il faut de magie pour rester motivé.</p>
+            </div>
+
+            <div class="progress-score-card">
+                <span class="metric-label">Énergie</span>
+                <strong th:text="${#numbers.formatDecimal(progression, 0, 0)} + '%'">0%</strong>
+                <p>Basé sur les leçons que tu as complétées.</p>
+            </div>
+        </section>
+
+        <section class="progress-panel">
+            <div class="progress-track">
+                <div class="progress-fill" th:style="'width:' + ${progression} + '%'"></div>
+            </div>
+
+            <div class="progress-grid">
+                <article class="progress-card">
+                    <p class="eyebrow">État actuel</p>
+                    <h2 th:text="${#numbers.formatDecimal(progression, 0, 0)} + '% aligné'">0% aligné</h2>
+                    <p>Continue doucement: régularité > intensité.</p>
+                </article>
+
+                <article class="progress-card accent-progress-card">
+                    <p class="eyebrow">Lecture rapide</p>
+                    <ul class="feature-list">
+                        <li>0–30% : éveil</li>
+                        <li>31–70% : flow</li>
+                        <li>71–100% : maîtrise</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script type="module" th:src="@{/js/app/ambient.js}"></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" th:href="@{/css/site.css}">
+</head>
+<body class="app-body app-quiz">
+<main class="quiz-shell">
+    <section class="quiz-layout">
+        <div class="quiz-header-card">
+            <p class="eyebrow">Quiz</p>
+            <h1>Teste rapidement ce que tu retiens.</h1>
+            <p class="lead">Un format plus propre, plus lisible, et moins brut que le formulaire par defaut.</p>
+        </div>
+
+        <form class="quiz-form-card" th:action="@{/quiz/{quizId}/soumettre(quizId=${quiz.id})}" method="post">
+            <article class="quiz-question-block" th:each="q, iStat : ${quiz.questions}">
+                <p class="question-index" th:text="${'Question ' + (iStat.index + 1)}">Question 1</p>
+                <h2 th:text="${q.intitule}">Intitule</h2>
+                <label class="quiz-choice" th:each="choix, i : ${q.choix}">
+                    <input type="radio" th:name="'reponses[' + ${iStat.index} + ']'" th:value="${i}" />
+                    <span th:text="${choix}">Choix</span>
+                </label>
+            </article>
+
+            <button class="button-primary wide-button" type="submit">Soumettre</button>
+        </form>
+    </section>
+</main>
+<script type="module" th:src="@{/js/app/ambient.js}"></script>
+</body>
+</html>

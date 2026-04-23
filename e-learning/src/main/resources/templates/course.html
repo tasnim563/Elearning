@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours</title>
+    <link rel="stylesheet" th:href="@{/css/site.css}">
+</head>
+<body class="app-body app-course">
+<div class="app-shell">
+    <aside class="sidebar">
+        <a class="brand-lockup" th:href="@{/}">
+            <span class="brand-badge">EL</span>
+            <span>
+                <strong>E-Learning</strong>
+                <small>Lecture</small>
+            </span>
+        </a>
+
+        <nav class="sidebar-nav">
+            <a class="sidebar-link" th:href="@{/}">Accueil</a>
+            <a class="sidebar-link" th:href="@{/catalogue}">Catalogue</a>
+            <a class="sidebar-link" th:href="@{/progression}">Progression</a>
+        </nav>
+
+        <section class="sidebar-panel">
+            <p class="panel-label">Lecons</p>
+            <div id="lesson-nav" class="lesson-nav"></div>
+        </section>
+    </aside>
+
+    <main class="content-shell">
+        <section id="course-root"></section>
+    </main>
+</div>
+
+<script type="module" th:src="@{/js/app/coursePage.js}"></script>
+<script type="module" th:src="@{/js/app/ambient.js}"></script>
+<script th:inline="javascript">
+    window.__COURSE_ID__ = /*[[${courseId}]]*/ 0;
+</script>
+</body>
+</html>
+

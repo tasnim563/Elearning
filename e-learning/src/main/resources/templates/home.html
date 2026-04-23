@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Learning Studio</title>
+    <link rel="stylesheet" th:href="@{/css/site.css}">
+</head>
+<body class="app-body app-home">
+<div class="app-shell">
+    <aside class="sidebar">
+        <a class="brand-lockup" th:href="@{/}">
+            <span class="brand-badge">EL</span>
+            <span>
+                <strong>E-Learning Studio</strong>
+                <small>Learning experience hub</small>
+            </span>
+        </a>
+
+        <nav class="sidebar-nav">
+            <a class="sidebar-link active" th:href="@{/}">Accueil</a>
+            <a class="sidebar-link" th:href="@{/catalogue}">Catalogue</a>
+            <a class="sidebar-link" th:href="@{/progression}">Progression</a>
+            <a class="sidebar-link" th:href="@{/login}">Connexion</a>
+        </nav>
+
+        <section class="sidebar-panel">
+            <p class="panel-label">Aujourd'hui</p>
+            <h3>Cap sur la pratique</h3>
+            <p>Choisis un cours, avance à ton rythme, et valide tes acquis avec un quiz.</p>
+        </section>
+    </aside>
+
+    <main class="content-shell">
+        <section class="hero-banner hero-banner-home hero-banner-split">
+            <div class="hero-copy-block">
+                <p class="eyebrow">E‑Learning Universe</p>
+                <h1>Entre dans ton monde d’apprentissage.</h1>
+                <p class="hero-sublead">Un univers doux, futuriste et focus. Explore les cours, progresse sans friction, et valide tes acquis au bon moment.</p>
+                <div class="hero-actions">
+                    <a class="button-primary" th:href="@{/catalogue}">Explorer l’univers</a>
+                    <a class="button-ghost" th:href="@{/progression}">Voir mon trajet</a>
+                </div>
+
+                <div class="hero-stats">
+                    <article class="hero-stat">
+                        <span>Cours disponibles</span>
+                        <strong th:text="${totalCourses}">0</strong>
+                    </article>
+                    <article class="hero-stat">
+                        <span>Mode</span>
+                        <strong>Dream</strong>
+                    </article>
+                </div>
+            </div>
+
+            <article class="landing-portal" aria-hidden="true">
+                <div class="portal-caption">
+                    <p class="eyebrow">Portail</p>
+                    <h3>Une interface qui te guide.</h3>
+                    <p>Des repères clairs, une progression fluide, et un rendu “designer” partout.</p>
+                </div>
+            </article>
+        </section>
+
+        <section class="section-grid">
+            <article class="story-card">
+                <p class="eyebrow">Navigation</p>
+                <h2>Un chemin lumineux</h2>
+                <p>Tout est pensé pour te faire avancer: une logique simple, des repères clairs, et des actions visibles.</p>
+            </article>
+
+            <article class="story-card">
+                <p class="eyebrow">Rythme</p>
+                <h2>Progression sans bruit</h2>
+                <ul class="feature-list">
+                    <li>Explore → choisis</li>
+                    <li>Lis → pratique</li>
+                    <li>Quiz → valide</li>
+                </ul>
+            </article>
+        </section>
+
+        <section class="section-header">
+            <div>
+                <p class="eyebrow">AI Console</p>
+                <h2>Widgets intelligents</h2>
+            </div>
+            <span class="pill soft">Live</span>
+        </section>
+
+        <section class="ai-grid">
+            <article class="ai-card">
+                <div class="ai-card-top">
+                    <div class="ai-dot" aria-hidden="true"></div>
+                    <p class="eyebrow">Assistant</p>
+                </div>
+                <h3>AI Focus</h3>
+                <p class="lead ai-copy">Recommandations contextuelles basées sur ton rythme et tes leçons.</p>
+                <div class="ai-actions">
+                    <a class="button-primary compact-button" th:href="@{/catalogue}">Suggérer un cours</a>
+                    <a class="button-ghost compact-button" th:href="@{/progression}">Voir l’analyse</a>
+                </div>
+            </article>
+
+            <article class="ai-card viz-card">
+                <div class="ai-card-top">
+                    <p class="eyebrow">Signal</p>
+                    <span class="ai-badge">Neon</span>
+                </div>
+                <h3>Pulse Panel</h3>
+                <p class="ai-copy">Une micro‑visualisation pour rendre ton parcours “vivant”.</p>
+                <div class="viz">
+                    <div class="viz-bars" aria-hidden="true">
+                        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                    <div class="viz-row">
+                        <span class="viz-label">Engagement</span>
+                        <span class="viz-value">Stable</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="ai-card holo-card">
+                <div class="ai-card-top">
+                    <p class="eyebrow">Système</p>
+                    <span class="ai-badge">2035</span>
+                </div>
+                <h3>Holo Cards</h3>
+                <p class="ai-copy">Cartes flottantes avec lumière holographique et micro‑interactions.</p>
+                <div class="holo-chips" aria-hidden="true">
+                    <span class="holo-chip"></span>
+                    <span class="holo-chip"></span>
+                    <span class="holo-chip"></span>
+                </div>
+            </article>
+        </section>
+
+        <section class="section-header">
+            <div>
+                <p class="eyebrow">Selection</p>
+                <h2>Cours mis en avant</h2>
+            </div>
+            <a class="button-secondary compact-button" th:href="@{/catalogue}">Voir tout</a>
+        </section>
+
+        <section class="hero-course-grid">
+            <article class="hero-course-card" th:each="coursItem : ${featuredCourses}">
+                <div class="hero-course-media">
+                    <img th:if="${coursItem.imageUrl != null and !#strings.isEmpty(coursItem.imageUrl)}"
+                         th:src="${coursItem.imageUrl}"
+                         th:alt="${coursItem.titre}">
+                    <div class="course-cover-fallback" th:if="${coursItem.imageUrl == null or #strings.isEmpty(coursItem.imageUrl)}">
+                        <span>Course Cover</span>
+                    </div>
+                </div>
+                <div class="hero-course-content">
+                    <div class="feature-topline">
+                        <span th:text="${coursItem.categorie != null ? coursItem.categorie : 'Formation'}">Formation</span>
+                        <span th:text="${coursItem.niveau != null ? coursItem.niveau : 'Libre'}">Niveau</span>
+                    </div>
+                    <h3 th:text="${coursItem.titre}">Titre</h3>
+                    <p class="clamped-copy" th:text="${coursItem.description}">Description</p>
+                    <a class="button-primary compact-button" th:href="@{/cours/{id}(id=${coursItem.id})}">Ouvrir le cours</a>
+                </div>
+            </article>
+        </section>
+    </main>
+</div>
+
+<script type="module" th:src="@{/js/app/ambient.js}"></script>
+</body>
+</html>

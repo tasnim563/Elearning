@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalogue</title>
+    <link rel="stylesheet" th:href="@{/css/site.css}">
+</head>
+<body class="app-body app-catalogue">
+<div class="app-shell">
+    <aside class="sidebar">
+        <a class="brand-lockup" th:href="@{/}">
+            <span class="brand-badge">EL</span>
+            <span>
+                <strong>E-Learning</strong>
+                <small>Catalogue</small>
+            </span>
+        </a>
+
+        <nav class="sidebar-nav">
+            <a class="sidebar-link" th:href="@{/}">Accueil</a>
+            <a class="sidebar-link active" th:href="@{/catalogue}">Catalogue</a>
+            <a class="sidebar-link" th:href="@{/progression}">Progression</a>
+            <a class="sidebar-link" th:href="@{/login}">Connexion</a>
+        </nav>
+
+        <section class="sidebar-panel">
+            <p class="panel-label">Filtres</p>
+            <label class="field">
+                <span>Recherche</span>
+                <input id="course-search" type="search" placeholder="Titre, categorie...">
+            </label>
+            <label class="field">
+                <span>Niveau</span>
+                <select id="course-level">
+                    <option value="">Tous</option>
+                    <option value="DEBUTANT">Debutant</option>
+                    <option value="INTERMEDIAIRE">Intermediaire</option>
+                    <option value="AVANCE">Avance</option>
+                </select>
+            </label>
+        </section>
+    </aside>
+
+    <main class="content-shell">
+        <section class="page-header">
+            <div>
+                <p class="eyebrow">Catalogue</p>
+                <h1>Choisis un cours.</h1>
+            </div>
+        </section>
+
+        <section id="courses-root" class="course-grid"></section>
+    </main>
+</div>
+
+<script type="module" th:src="@{/js/app/coursesPage.js}"></script>
+<script type="module" th:src="@{/js/app/ambient.js}"></script>
+</body>
+</html>
+

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultat Quiz</title>
+    <link rel="stylesheet" th:href="@{/css/site.css}">
+</head>
+<body class="app-body app-quiz">
+<main class="quiz-shell">
+    <section class="quiz-result-card">
+        <p class="eyebrow">Resultat</p>
+        <h1>Quiz termine.</h1>
+        <div class="result-score">
+            <span>Score</span>
+            <strong th:text="${score}">0</strong>
+        </div>
+        <div class="action-row">
+            <a class="button-primary compact-button" th:href="@{/catalogue}">Retour catalogue</a>
+            <a class="button-secondary compact-button" th:href="@{/progression}">Voir progression</a>
+        </div>
+    </section>
+</main>
+<script type="module" th:src="@{/js/app/ambient.js}"></script>
+</body>
+</html>

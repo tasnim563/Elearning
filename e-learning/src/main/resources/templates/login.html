@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+    <link rel="stylesheet" th:href="@{/css/site.css}">
+</head>
+<body class="app-body app-login">
+<main class="login-shell">
+    <section class="login-panel">
+        <div class="login-copy">
+            <p class="eyebrow">Connexion</p>
+            <h1>Reprendre le parcours.</h1>
+            <p class="lead">Connexion simple et propre.</p>
+            <a class="button-secondary compact-button" th:href="@{/}">Retour a l'accueil</a>
+        </div>
+
+        <form class="login-form" th:action="@{/login}" method="post">
+            <div th:if="${param.error}" class="form-message error-message">Identifiants invalides.</div>
+            <div th:if="${param.logout}" class="form-message success-message">Deconnexion effectuee.</div>
+
+            <label class="field">
+                <span>Nom d'utilisateur</span>
+                <input type="text" name="username" autocomplete="username" required>
+            </label>
+            <label class="field">
+                <span>Mot de passe</span>
+                <input type="password" name="password" autocomplete="current-password" required>
+            </label>
+            <button class="button-primary wide-button" type="submit">Se connecter</button>
+        </form>
+    </section>
+</main>
+<script type="module" th:src="@{/js/app/ambient.js}"></script>
+</body>
+</html>
