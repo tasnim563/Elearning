@@ -60,5 +60,3 @@ This project follows a **full-stack architecture**:
 - HTML / CSS / JavaScript
 - Figma (UI/UX Design)
 
-
-## 📂 Project Structure
