@@ -3,35 +3,286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion</title>
+    <title>Connexion - E-Learn FST</title>
     <link rel="stylesheet" th:href="@{/css/site.css}">
+    <style>
+        .modern-login {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 480px;
+            width: 100%;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .logo-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo-header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+        
+        .logo-header p {
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
+        
+        .role-selection {
+            margin-bottom: 25px;
+        }
+        
+        .role-label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.95rem;
+        }
+        
+        .role-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .role-option {
+            position: relative;
+        }
+        
+        .role-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
+        
+        .role-option label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px 10px;
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f9fafb;
+        }
+        
+        .role-option input[type="radio"]:checked + label {
+            border-color: #667eea;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        }
+        
+        .role-option label:hover {
+            border-color: #9ca3af;
+            transform: translateY(-2px);
+        }
+        
+        .role-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+        
+        .role-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #374151;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #374151;
+            font-size: 0.95rem;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: #f9fafb;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+        }
+        
+        .login-button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .back-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .alert {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+        
+        .alert-success {
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+        
+        .demo-credentials {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .demo-credentials h4 {
+            margin-bottom: 10px;
+            color: #374151;
+            font-size: 0.9rem;
+        }
+        
+        .demo-credentials p {
+            margin: 5px 0;
+            color: #6b7280;
+        }
+        
+        .demo-credentials code {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+    </style>
 </head>
-<body class="app-body app-login">
-<main class="login-shell">
-    <section class="login-panel">
-        <div class="login-copy">
-            <p class="eyebrow">Connexion</p>
-            <h1>Reprendre le parcours.</h1>
-            <p class="lead">Connexion simple et propre.</p>
-            <a class="button-secondary compact-button" th:href="@{/}">Retour a l'accueil</a>
+<body>
+<div class="modern-login">
+    <div class="login-container">
+        <div class="logo-header">
+            <h1>e-learn Fst</h1>
+            <p>Connectez-vous pour accéder à votre espace d'apprentissage</p>
         </div>
-
+        
         <form class="login-form" th:action="@{/login}" method="post">
-            <div th:if="${param.error}" class="form-message error-message">Identifiants invalides.</div>
-            <div th:if="${param.logout}" class="form-message success-message">Deconnexion effectuee.</div>
-
-            <label class="field">
-                <span>Nom d'utilisateur</span>
-                <input type="text" name="username" autocomplete="username" required>
-            </label>
-            <label class="field">
-                <span>Mot de passe</span>
-                <input type="password" name="password" autocomplete="current-password" required>
-            </label>
-            <button class="button-primary wide-button" type="submit">Se connecter</button>
+            <div th:if="${param.error}" class="alert alert-error">
+                Identifiants invalides. Veuillez réessayer.
+            </div>
+            <div th:if="${param.logout}" class="alert alert-success">
+                Déconnexion effectuée avec succès.
+            </div>
+            
+            <div class="role-selection">
+                <label class="role-label">Je suis :</label>
+                <div class="role-options">
+                    <div class="role-option">
+                        <input type="radio" id="student" name="role" value="student" checked>
+                        <label for="student">
+                            <span class="role-icon">👨‍🎓</span>
+                            <span class="role-name">Étudiant</span>
+                        </label>
+                    </div>
+                    <div class="role-option">
+                        <input type="radio" id="admin" name="role" value="admin">
+                        <label for="admin">
+                            <span class="role-icon">👨‍💼</span>
+                            <span class="role-name">Admin</span>
+                        </label>
+                    </div>
+                    <div class="role-option">
+                        <input type="radio" id="manager" name="role" value="manager">
+                        <label for="manager">
+                            <span class="role-icon">👨‍🏫</span>
+                            <span class="role-name">Manager</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="username">Adresse email</label>
+                <input type="email" id="username" name="username" autocomplete="username" required placeholder="votre@email.com">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" autocomplete="current-password" required placeholder="••••••••">
+            </div>
+            
+            <button type="submit" class="login-button">Se connecter</button>
         </form>
-    </section>
-</main>
-<script type="module" th:src="@{/js/app/ambient.js}"></script>
+        
+        <div class="demo-credentials">
+            <h4>Comptes de démonstration :</h4>
+            <p><strong>Étudiant :</strong> <code>ghada@test.com</code> / <code>learner123</code></p>
+            <p><strong>Admin :</strong> <code>admin@elearning.local</code> / <code>admin123</code></p>
+            <p><strong>Manager :</strong> <code>manager@elearning.local</code> / <code>manager123</code></p>
+        </div>
+        
+        <div class="back-link">
+            <a th:href="@{/}">← Retour à l'accueil</a>
+        </div>
+    </div>
+</div>
 </body>
 </html>

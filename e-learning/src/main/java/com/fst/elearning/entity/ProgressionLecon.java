@@ -17,5 +17,18 @@ public class ProgressionLecon {
     private boolean completee;
     private LocalDateTime dateCompletion;
 
-    // Getters & Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public Utilisateur getApprenant() { return apprenant; }
+    public void setApprenant(Utilisateur apprenant) { this.apprenant = apprenant; }
+
+    public Lecon getLecon() { return lecon; }
+    public void setLecon(Lecon lecon) { this.lecon = lecon; }
+
+    public boolean isCompletee() { return completee; }
+    public void setCompletee(boolean completee) { this.completee = completee; }
+
+    public LocalDateTime getDateCompletion() { return dateCompletion; }
+    public void setDateCompletion(LocalDateTime dateCompletion) { this.dateCompletion = dateCompletion; }
 }

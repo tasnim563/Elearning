@@ -6,13 +6,12 @@ import com.fst.elearning.repository.UtilisateurRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class TestDataSeeder {
 
     @Bean
-    CommandLineRunner seedTestUser(UtilisateurRepository utilisateurRepository, PasswordEncoder passwordEncoder) {
+    CommandLineRunner seedTestUser(UtilisateurRepository utilisateurRepository) {
         return args -> {
             String email = "test@elearning.local";
             if (utilisateurRepository.findByEmail(email).isPresent()) {
@@ -22,11 +21,10 @@ public class TestDataSeeder {
             Utilisateur u = new Utilisateur();
             u.setNom("Compte Test");
             u.setEmail(email);
-            u.setMotDePasse(passwordEncoder.encode("test1234"));
+            u.setMotDePasse("{noop}test1234");
             u.setRole(Role.APPRENANT);
 
             utilisateurRepository.save(u);
         };
     }
 }
-

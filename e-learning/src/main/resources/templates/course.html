@@ -1,44 +1,410 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cours</title>
+    <title>Complete Web Development Bootcamp - e-learn Fst</title>
     <link rel="stylesheet" th:href="@{/css/site.css}">
+    <style>
+        .modern-course {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .course-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 20px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-menu a:hover {
+            color: white;
+        }
+        
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .btn-outline {
+            padding: 10px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .btn-primary {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .course-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 40px;
+        }
+        
+        .course-main {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+        
+        .back-link:hover {
+            color: white;
+        }
+        
+        .course-tags {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .course-tag {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .tag-category {
+            background: #fbbf24;
+            color: #78350f;
+        }
+        
+        .tag-level {
+            background: #6b7280;
+            color: white;
+        }
+        
+        .tag-free {
+            background: #10b981;
+            color: white;
+        }
+        
+        .course-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0 0 20px;
+            line-height: 1.2;
+        }
+        
+        .course-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+        }
+        
+        .course-meta {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .meta-item strong {
+            color: white;
+        }
+        
+        .instructor {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .instructor-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .instructor-info h4 {
+            margin: 0 0 5px;
+            color: white;
+        }
+        
+        .instructor-info p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        .course-sidebar {
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+        
+        .sidebar-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        
+        .course-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        
+        .sidebar-content {
+            padding: 25px;
+        }
+        
+        .price-tag {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #10b981;
+            margin-bottom: 15px;
+        }
+        
+        .access-info {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 25px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        
+        .btn-enroll {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-enroll:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-wishlist {
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-wishlist:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .features-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .features-list .check-icon {
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 1024px) {
+            .course-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .course-sidebar {
+                position: static;
+            }
+            
+            .course-title {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+                padding: 15px 20px;
+            }
+            
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+            
+            .course-container {
+                padding: 20px 15px;
+            }
+            
+            .course-title {
+                font-size: 1.5rem;
+            }
+            
+            .course-meta {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
 </head>
-<body class="app-body app-course">
-<div class="app-shell">
-    <aside class="sidebar">
-        <a class="brand-lockup" th:href="@{/}">
-            <span class="brand-badge">EL</span>
-            <span>
-                <strong>E-Learning</strong>
-                <small>Lecture</small>
-            </span>
-        </a>
-
-        <nav class="sidebar-nav">
-            <a class="sidebar-link" th:href="@{/}">Accueil</a>
-            <a class="sidebar-link" th:href="@{/catalogue}">Catalogue</a>
-            <a class="sidebar-link" th:href="@{/progression}">Progression</a>
-        </nav>
-
-        <section class="sidebar-panel">
-            <p class="panel-label">Lecons</p>
-            <div id="lesson-nav" class="lesson-nav"></div>
-        </section>
-    </aside>
-
-    <main class="content-shell">
-        <section id="course-root"></section>
-    </main>
-</div>
-
-<script type="module" th:src="@{/js/app/coursePage.js}"></script>
-<script type="module" th:src="@{/js/app/ambient.js}"></script>
-<script th:inline="javascript">
-    window.__COURSE_ID__ = /*[[${courseId}]]*/ 0;
-</script>
+<body class="modern-course">
+    <header class="course-header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                <div class="logo-icon">📚</div>
+                <span>e-learn Fst</span>
+            </a>
+            
+            <nav class="nav-menu">
+                <a href="/">Browse</a>
+                <a href="/progression">My Learning</a>
+                <a href="/admin" sec:authorize="hasRole('ADMIN')">Admin</a>
+                <a href="/manager" sec:authorize="hasRole('FORMATEUR')">Manager</a>
+            </nav>
+            
+            <div class="nav-actions">
+                <a href="/login" class="btn-primary" sec:authorize="!isAuthenticated()">Sign In</a>
+                <form th:action="@{/logout}" method="post" style="margin: 0;" sec:authorize="isAuthenticated()">
+                    <button type="submit" class="btn-outline" style="cursor: pointer; background: transparent; color: white; border-color: rgba(255,255,255,0.3);">Deconnexion</button>
+                </form>
+            </div>
+        </div>
+    </header>
+    
+    <div class="course-wrapper" style="max-width: 1200px; margin: 0 auto; padding: 24px 20px; display: grid; grid-template-columns: 1fr 300px; gap: 24px;">
+        <div id="course-root"></div>
+        <aside class="sidebar-area">
+            <div id="lesson-nav"></div>
+        </aside>
+    </div>
+    <style>
+        @media (max-width: 1024px) {
+            .course-wrapper { grid-template-columns: 1fr !important; }
+            .sidebar-area { position: static; }
+        }
+        .sidebar-area { position: sticky; top: 20px; height: fit-content; }
+    </style>
+    
+    <script type="module" th:src="@{/js/app/coursePage.js}"></script>
+    <script type="module" th:src="@{/js/app/ambient.js}"></script>
+    <script th:inline="javascript">
+        window.__COURSE_ID__ = /*[[${courseId}]]*/ 0;
+    </script>
 </body>
 </html>
-

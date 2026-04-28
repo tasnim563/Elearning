@@ -161,6 +161,265 @@ a {
         linear-gradient(135deg, #f7f3ed 0%, #eee2d2 100%);
 }
 
+.app-backoffice {
+    background:
+        radial-gradient(circle at top left, rgba(14, 165, 233, 0.12), transparent 18%),
+        radial-gradient(circle at bottom right, rgba(15, 23, 42, 0.10), transparent 20%),
+        linear-gradient(135deg, #eef3fb 0%, #e7edf7 100%);
+}
+
+.app-admin::before,
+.app-manager::before {
+    background:
+        radial-gradient(920px 540px at 18% -10%, rgba(14, 165, 233, 0.18), transparent 60%),
+        radial-gradient(860px 500px at 88% 6%, rgba(17, 24, 39, 0.10), transparent 58%),
+        radial-gradient(900px 520px at 60% 112%, rgba(15, 118, 110, 0.08), transparent 58%),
+        linear-gradient(180deg, #fbfdff 0%, #eff4fa 60%, #e8eef7 100%);
+}
+
+.app-admin .sidebar,
+.app-manager .sidebar {
+    background:
+        radial-gradient(900px 520px at 40% -10%, rgba(14, 165, 233, 0.18), transparent 55%),
+        radial-gradient(900px 520px at 120% 10%, rgba(15, 23, 42, 0.12), transparent 55%),
+        rgba(11, 17, 32, 0.92);
+}
+
+.app-backoffice .content-shell {
+    max-width: 1280px;
+}
+
+.page-header-hero {
+    padding: 4px 0 10px;
+}
+
+.flash-stack {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.stat-card,
+.backoffice-card,
+.admin-course-card,
+.module-admin-card,
+.lesson-mini-card,
+.note-card {
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: var(--shadow-soft);
+}
+
+.stat-card {
+    padding: 18px;
+}
+
+.stat-card span {
+    display: block;
+    color: var(--muted);
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+}
+
+.stat-card strong {
+    display: block;
+    margin-top: 8px;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-family: "Baskerville", "Palatino Linotype", serif;
+}
+
+.backoffice-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.backoffice-card {
+    padding: 20px;
+}
+
+.backoffice-card-wide {
+    grid-column: span 2;
+}
+
+.backoffice-form {
+    display: grid;
+    gap: 14px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.course-admin-grid {
+    display: grid;
+    gap: 16px;
+}
+
+.admin-course-card {
+    padding: 20px;
+}
+
+.admin-course-head,
+.module-admin-head,
+.lesson-mini-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.module-stack {
+    display: grid;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.module-admin-card {
+    padding: 16px;
+}
+
+.lesson-mini-list {
+    display: grid;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.lesson-mini-card {
+    padding: 14px;
+    background: rgba(248, 250, 252, 0.9);
+}
+
+.lesson-mini-card p,
+.muted-copy {
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.admin-course-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    margin: 12px 0 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.admin-course-status.is-active {
+    background: rgba(15, 118, 110, 0.12);
+    color: #0f766e;
+}
+
+.admin-course-status.is-off {
+    background: rgba(148, 163, 184, 0.16);
+    color: #475569;
+}
+
+.stack-notes {
+    display: grid;
+    gap: 12px;
+}
+
+.note-card {
+    padding: 16px;
+    background: rgba(248, 250, 252, 0.9);
+}
+
+.note-card p {
+    margin: 8px 0 0;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.reading-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.reading-body {
+    display: grid;
+    gap: 14px;
+}
+
+.reading-body > * {
+    margin: 0;
+}
+
+.reading-body p,
+.reading-body li {
+    color: var(--text);
+    line-height: 1.85;
+    font-size: 1rem;
+}
+
+.reading-subtitle {
+    margin-top: 6px;
+    font-size: 1.15rem;
+}
+
+.reading-list {
+    margin: 0;
+    padding-left: 20px;
+    display: grid;
+    gap: 8px;
+}
+
+.course-focus {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.course-focus-card {
+    padding: 18px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: var(--shadow-soft);
+}
+
+.course-focus-card-soft {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.08), rgba(15, 118, 110, 0.06));
+}
+
+.login-hint-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.hint-card {
+    padding: 14px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid var(--line);
+}
+
+.hint-card strong {
+    display: block;
+}
+
+.hint-card p {
+    margin: 8px 0 0;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
 .page-header {
     margin-bottom: 16px;
 }
@@ -1829,13 +2088,26 @@ h3 {
     .login-panel,
     .course-hero,
     .progress-hero,
-    .progress-grid {
+    .progress-grid,
+    .course-header,
+    .course-focus,
+    .backoffice-grid,
+    .stats-grid,
+    .form-grid {
         grid-template-columns: 1fr;
     }
 
     .section-header {
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .backoffice-card-wide {
+        grid-column: auto;
+    }
+
+    .login-hint-grid {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -1856,6 +2128,10 @@ h3 {
     }
 
     .course-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
         grid-template-columns: 1fr;
     }
 }

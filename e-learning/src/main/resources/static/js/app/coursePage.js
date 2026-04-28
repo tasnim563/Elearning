@@ -25,18 +25,52 @@ function courseHeader(course) {
     ]);
 }
 
+function renderRichText(content) {
+    const blocks = String(content || "")
+        .split(/\n{2,}/)
+        .map(block => block.trim())
+        .filter(Boolean);
+
+    if (blocks.length === 0) {
+        return [el("p", { class: "reading-empty" }, ["Contenu vide."])];
+    }
+
+    return blocks.flatMap((block) => {
+        const lines = block.split("\n").map(line => line.trim()).filter(Boolean);
+        const isList = lines.every(line => line.startsWith("- ") || line.startsWith("• "));
+
+        if (isList) {
+            return [
+                el("ul", { class: "reading-list" }, lines.map(line =>
+                    el("li", {}, [line.replace(/^[-•]\s+/, "")])
+                ))
+            ];
+        }
+
+        return lines.map(line => {
+            if (/^#+\s+/.test(line)) {
+                return el("h3", { class: "reading-subtitle" }, [line.replace(/^#+\s+/, "")]);
+            }
+            return el("p", {}, [line]);
+        });
+    });
+}
+
 function readingPane(lesson, onStartQuiz) {
     return el("section", { class: "reading" }, [
         el("div", { class: "reading-top" }, [
             el("div", {}, [
                 el("p", { class: "eyebrow" }, [`Lecon ${lesson.ordre}`]),
                 el("h2", {}, [lesson.titre || "Lecon"]),
-                el("p", { class: "reading-meta" }, [`${lesson.dureeMin || 0} min`])
+                el("div", { class: "reading-meta" }, [
+                    el("span", { class: "pill soft" }, [`${lesson.dureeMin || 0} min`]),
+                    el("span", { class: "pill" }, ["Lecture guidee"])
+                ])
             ]),
             el("button", { class: "button-primary compact-button", type: "button", onClick: onStartQuiz }, ["Quiz"])
         ]),
         el("article", { class: "reading-body" }, [
-            el("p", {}, [lesson.contenu || ""])
+            ...renderRichText(lesson.contenu)
         ])
     ]);
 }
@@ -144,6 +178,22 @@ try {
             return;
         }
 
+        const moduleIndex = modules.findIndex(module => (module.lecons || []).some(lesson => String(lesson.id) === String(selected.id)));
+        const currentModule = moduleIndex >= 0 ? modules[moduleIndex] : null;
+
+        main.appendChild(el("div", { class: "course-focus" }, [
+            el("div", { class: "course-focus-card" }, [
+                el("p", { class: "eyebrow" }, [currentModule ? currentModule.titre : "Parcours"]),
+                el("h3", {}, [selected.titre || "Lecon"]),
+                el("p", { class: "muted-copy" }, [currentModule?.description || ""])
+            ]),
+            el("div", { class: "course-focus-card course-focus-card-soft" }, [
+                el("p", { class: "eyebrow" }, ["Lecture"]),
+                el("strong", {}, [`${selected.dureeMin || 0} minutes`]),
+                el("p", { class: "muted-copy" }, ["Contenu structure pour etre lu rapidement et memorise plus facilement."])
+            ])
+        ]));
+
         main.appendChild(readingPane(selected, async () => {
             const quiz = await fetchQuiz(selected.id);
             if (!quiz) {
@@ -163,4 +213,3 @@ try {
 } catch (e) {
     root.replaceChildren(el("div", { class: "empty-panel" }, ["Erreur de chargement."]));
 }
-

@@ -1,61 +1,214 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catalogue</title>
+    <title>Catalogue - e-learn Fst</title>
     <link rel="stylesheet" th:href="@{/css/site.css}">
+    <style>
+        .modern-catalogue {
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+        
+        .modern-header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #1a1a1a;
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-menu a:hover, .nav-menu a.active {
+            color: #667eea;
+        }
+        
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .btn-outline {
+            padding: 10px 20px;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: white;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        
+        .btn-outline:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .page-header {
+            margin-bottom: 30px;
+        }
+        
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0 0 8px;
+        }
+        
+        .page-header p {
+            color: #718096;
+            margin: 0;
+        }
+        
+        .filters-bar {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .filters-bar input, .filters-bar select {
+            padding: 10px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            background: white;
+            min-width: 200px;
+        }
+        
+        .filters-bar input:focus, .filters-bar select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        @media (max-width: 768px) {
+            .header-container { flex-direction: column; height: auto; padding: 15px 20px; }
+            .nav-menu { flex-wrap: wrap; justify-content: center; gap: 20px; }
+            .filters-bar { flex-direction: column; }
+            .course-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
-<body class="app-body app-catalogue">
-<div class="app-shell">
-    <aside class="sidebar">
-        <a class="brand-lockup" th:href="@{/}">
-            <span class="brand-badge">EL</span>
-            <span>
-                <strong>E-Learning</strong>
-                <small>Catalogue</small>
-            </span>
-        </a>
-
-        <nav class="sidebar-nav">
-            <a class="sidebar-link" th:href="@{/}">Accueil</a>
-            <a class="sidebar-link active" th:href="@{/catalogue}">Catalogue</a>
-            <a class="sidebar-link" th:href="@{/progression}">Progression</a>
-            <a class="sidebar-link" th:href="@{/login}">Connexion</a>
-        </nav>
-
-        <section class="sidebar-panel">
-            <p class="panel-label">Filtres</p>
-            <label class="field">
-                <span>Recherche</span>
-                <input id="course-search" type="search" placeholder="Titre, categorie...">
-            </label>
-            <label class="field">
-                <span>Niveau</span>
-                <select id="course-level">
-                    <option value="">Tous</option>
-                    <option value="DEBUTANT">Debutant</option>
-                    <option value="INTERMEDIAIRE">Intermediaire</option>
-                    <option value="AVANCE">Avance</option>
-                </select>
-            </label>
-        </section>
-    </aside>
-
-    <main class="content-shell">
-        <section class="page-header">
-            <div>
-                <p class="eyebrow">Catalogue</p>
-                <h1>Choisis un cours.</h1>
+<body class="modern-catalogue">
+    <header class="modern-header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                <div class="logo-icon">📚</div>
+                <span>e-learn Fst</span>
+            </a>
+            
+            <nav class="nav-menu">
+                <a href="/">Accueil</a>
+                <a href="/catalogue" class="active">Browse</a>
+                <a href="/progression">My Learning</a>
+                <a href="/admin" sec:authorize="hasRole('ADMIN')">Admin</a>
+                <a href="/manager" sec:authorize="hasRole('FORMATEUR')">Manager</a>
+            </nav>
+            
+            <div class="nav-actions">
+                <a href="/login" class="btn-primary" sec:authorize="!isAuthenticated()">Sign In</a>
+                <form th:action="@{/logout}" method="post" style="margin: 0;" sec:authorize="isAuthenticated()">
+                    <button type="submit" class="btn-outline" style="cursor: pointer;">Deconnexion</button>
+                </form>
             </div>
-        </section>
-
+        </div>
+    </header>
+    
+    <div class="main-container">
+        <div class="page-header">
+            <h1>Catalogue des cours</h1>
+            <p>Explorez toutes nos formations disponibles.</p>
+        </div>
+        
+        <div class="filters-bar">
+            <input id="course-search" type="search" placeholder="Rechercher un cours...">
+            <select id="course-level">
+                <option value="">Tous les niveaux</option>
+                <option value="DEBUTANT">Debutant</option>
+                <option value="INTERMEDIAIRE">Intermediaire</option>
+                <option value="AVANCE">Avance</option>
+            </select>
+        </div>
+        
         <section id="courses-root" class="course-grid"></section>
-    </main>
-</div>
+    </div>
 
 <script type="module" th:src="@{/js/app/coursesPage.js}"></script>
 <script type="module" th:src="@{/js/app/ambient.js}"></script>
 </body>
 </html>
-

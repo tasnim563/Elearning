@@ -2,8 +2,9 @@ package com.fst.elearning.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -12,7 +13,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     @Bean
@@ -25,14 +26,18 @@ public class SecurityConfig {
                                 "/catalogue/**",
                                 "/cours/**",
                                 "/progression/**",
-                                "/quiz/**",
-                                "/h2-console/**",
-                                "/login",
-                                "/css/**",
-                                "/js/**",
-                                "/js/app/**",
-                                "/images/**"
+                        "/quiz/**",
+                        "/admin/login",
+                        "/admin/assets/**",
+                        "/h2-console/**",
+                        "/login",
+                        "/css/**",
+                        "/js/**",
+                        "/js/app/**",
+                        "/images/**"
                         ).permitAll() // accès libre
+                        .requestMatchers("/admin", "/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/manager", "/manager/**").hasRole("FORMATEUR")
                         .requestMatchers("/formateur/**").hasRole("FORMATEUR")
                         .requestMatchers("/apprenant/**").hasRole("APPRENANT")
                         .anyRequest().authenticated()
@@ -41,7 +46,17 @@ public class SecurityConfig {
                 .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
                 .formLogin(login -> login
                         .loginPage("/login")
-                        .defaultSuccessUrl("/catalogue", true) // redirection après succès
+                        .successHandler((request, response, authentication) -> {
+                            String target = "/progression";
+                            if (hasRole(authentication, "ADMIN")) {
+                                target = "/admin";
+                            } else if (hasRole(authentication, "FORMATEUR")) {
+                                target = "/manager";
+                            } else if (hasRole(authentication, "APPRENANT")) {
+                                target = "/progression";
+                            }
+                            response.sendRedirect(target);
+                        })
                         .permitAll()
                 )
                 .logout(logout -> logout
@@ -51,5 +66,10 @@ public class SecurityConfig {
                 );
 
         return http.build();
+    }
+
+    private boolean hasRole(Authentication authentication, String role) {
+        return authentication.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_" + role));
     }
 }

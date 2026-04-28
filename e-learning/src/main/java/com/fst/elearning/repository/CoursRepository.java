@@ -9,6 +9,9 @@ import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 
 public interface CoursRepository extends JpaRepository<Cours, Long> {
+    @EntityGraph(attributePaths = {"modules", "modules.lecons", "formateur"})
+    java.util.List<Cours> findAllByOrderByTitreAsc();
+
     Page<Cours> findByTitreContaining(String titre, Pageable pageable);
 
     @EntityGraph(attributePaths = {"modules", "modules.lecons"})

@@ -1,76 +1,373 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Progression</title>
+    <title>Ma progression - e-learn Fst</title>
     <link rel="stylesheet" th:href="@{/css/site.css}">
+    <style>
+        .modern-progression {
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+        
+        .modern-header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #1a1a1a;
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-menu a:hover, .nav-menu a.active {
+            color: #667eea;
+        }
+        
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .btn-outline {
+            padding: 10px 20px;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: white;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        
+        .btn-outline:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .page-header {
+            margin-bottom: 40px;
+        }
+        
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0 0 8px;
+        }
+        
+        .page-header p {
+            color: #718096;
+            margin: 0;
+        }
+        
+        .hero-stats {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 16px;
+            padding: 30px;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .hero-stats h2 {
+            margin: 0 0 16px;
+            font-size: 1.25rem;
+        }
+        
+        .global-progress {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .progress-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: conic-gradient(white 0% var(--progress, 0%), rgba(255,255,255,0.2) var(--progress, 0%) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .progress-circle::before {
+            content: '';
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            position: absolute;
+        }
+        
+        .progress-circle strong {
+            position: relative;
+            z-index: 1;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .progress-info p {
+            margin: 0 0 4px;
+            opacity: 0.9;
+        }
+        
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        
+        .course-progress-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .course-progress-card:hover {
+            transform: translateY(-4px);
+        }
+        
+        .course-progress-card h3 {
+            margin: 0 0 8px;
+            font-size: 1.1rem;
+            color: #1a1a1a;
+        }
+        
+        .course-category {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #e0e7ff;
+            color: #3730a3;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .progress-track {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 4px;
+            transition: width 0.6s ease;
+        }
+        
+        .progress-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .progress-meta span {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+        
+        .progress-meta strong {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .status-en-cours {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .status-termine {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-abandonne {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .btn-primary {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #718096;
+        }
+        
+        .empty-state h3 {
+            color: #1a1a1a;
+            margin: 0 0 8px;
+        }
+        
+        .empty-state p {
+            margin: 0 0 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .header-container { flex-direction: column; height: auto; padding: 15px 20px; }
+            .nav-menu { flex-wrap: wrap; justify-content: center; gap: 20px; }
+            .courses-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
-<body class="app-body app-progress">
-<div class="app-shell">
-    <aside class="sidebar">
-        <a class="brand-lockup" th:href="@{/}">
-            <span class="brand-badge">EL</span>
-            <span>
-                <strong>E-Learning Studio</strong>
-                <small>Suivi d'apprentissage</small>
-            </span>
-        </a>
-
-        <nav class="sidebar-nav">
-            <a class="sidebar-link" th:href="@{/}">Accueil</a>
-            <a class="sidebar-link" th:href="@{/catalogue}">Catalogue</a>
-            <a class="sidebar-link active" th:href="@{/progression}">Progression</a>
-            <a class="sidebar-link" th:href="@{/login}">Connexion</a>
-        </nav>
-
-        <section class="sidebar-panel">
-            <p class="panel-label">Rythme</p>
-            <h3>Suivi visuel</h3>
-            <p>Un tableau simple pour voir où tu en es, sans détails inutiles.</p>
-        </section>
-    </aside>
-
-    <main class="content-shell">
-        <section class="progress-hero">
-            <div class="progress-copy">
-                <p class="eyebrow">Trajectoire</p>
-                <h1>Ton voyage, en un regard.</h1>
-                <p class="lead">Une progression lisible, avec juste ce qu’il faut de magie pour rester motivé.</p>
+<body class="modern-progression">
+    <header class="modern-header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                <div class="logo-icon">📚</div>
+                <span>e-learn Fst</span>
+            </a>
+            
+            <nav class="nav-menu">
+                <a href="/">Accueil</a>
+                <a href="/catalogue">Browse</a>
+                <a href="/progression" class="active">My Learning</a>
+                <a href="/admin" sec:authorize="hasRole('ADMIN')">Admin</a>
+                <a href="/manager" sec:authorize="hasRole('FORMATEUR')">Manager</a>
+            </nav>
+            
+            <div class="nav-actions">
+                <form th:action="@{/logout}" method="post" style="margin: 0;">
+                    <button type="submit" class="btn-outline">Deconnexion</button>
+                </form>
             </div>
-
-            <div class="progress-score-card">
-                <span class="metric-label">Énergie</span>
-                <strong th:text="${#numbers.formatDecimal(progression, 0, 0)} + '%'">0%</strong>
-                <p>Basé sur les leçons que tu as complétées.</p>
+        </div>
+    </header>
+    
+    <div class="main-container">
+        <div class="page-header">
+            <h1>Ma progression</h1>
+            <p>Suivez votre avancement dans tous vos cours.</p>
+        </div>
+        
+        <div class="hero-stats">
+            <h2>Progression globale</h2>
+            <div class="global-progress">
+                <div class="progress-circle" th:style="'--progress:' + ${progression} + '%'">
+                    <strong th:text="${#numbers.formatDecimal(progression, 0, 0)} + '%'">0%</strong>
+                </div>
+                <div class="progress-info">
+                    <p>Vous avez complete <strong th:text="${#numbers.formatDecimal(progression, 0, 0)} + '%'">0%</strong> de vos cours en cours.</p>
+                    <p>Continuez regulierement pour atteindre vos objectifs !</p>
+                </div>
             </div>
-        </section>
-
-        <section class="progress-panel">
-            <div class="progress-track">
-                <div class="progress-fill" th:style="'width:' + ${progression} + '%'"></div>
+        </div>
+        
+        <div th:if="${courseProgresses != null and !courseProgresses.isEmpty()}" class="courses-grid">
+            <div class="course-progress-card" th:each="cp : ${courseProgresses}">
+                <span class="course-category" th:text="${cp.category}">Categorie</span>
+                <h3 th:text="${cp.title}">Titre du cours</h3>
+                <div class="progress-track">
+                    <div class="progress-fill" th:style="'width:' + ${cp.progress} + '%'"></div>
+                </div>
+                <div class="progress-meta">
+                    <span>
+                        <strong th:text="${#numbers.formatDecimal(cp.progress, 0, 0)} + '%'">0%</strong> complete
+                    </span>
+                    <span class="status-badge" 
+                          th:classappend="${cp.status == 'TERMINE'} ? ' status-termine' : (${cp.status == 'ABANDONNE'} ? ' status-abandonne' : ' status-en-cours')"
+                          th:text="${cp.status == 'TERMINE'} ? 'Termine' : (${cp.status == 'ABANDONNE'} ? 'Abandonne' : 'En cours')">En cours</span>
+                </div>
+                <div style="margin-top: 16px;">
+                    <a th:href="@{/cours/{id}(id=${cp.courseId})}" class="btn-primary">Continuer</a>
+                </div>
             </div>
-
-            <div class="progress-grid">
-                <article class="progress-card">
-                    <p class="eyebrow">État actuel</p>
-                    <h2 th:text="${#numbers.formatDecimal(progression, 0, 0)} + '% aligné'">0% aligné</h2>
-                    <p>Continue doucement: régularité > intensité.</p>
-                </article>
-
-                <article class="progress-card accent-progress-card">
-                    <p class="eyebrow">Lecture rapide</p>
-                    <ul class="feature-list">
-                        <li>0–30% : éveil</li>
-                        <li>31–70% : flow</li>
-                        <li>71–100% : maîtrise</li>
-                    </ul>
-                </article>
-            </div>
-        </section>
-    </main>
-</div>
-
-<script type="module" th:src="@{/js/app/ambient.js}"></script>
+        </div>
+        
+        <div th:if="${courseProgresses == null or courseProgresses.isEmpty()}" class="empty-state">
+            <h3>Aucun cours en cours</h3>
+            <p>Vous n'avez pas encore de cours en cours. Commencez votre parcours d'apprentissage !</p>
+            <a href="/catalogue" class="btn-primary">Explorer le catalogue</a>
+        </div>
+    </div>
+    
+    <script type="module" th:src="@{/js/app/ambient.js}"></script>
 </body>
 </html>
