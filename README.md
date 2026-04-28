@@ -1,13 +1,65 @@
-DESCRIPTION DU PROJET
-Nous avons développé le code nécessaire pour créer une plateforme d’e-learning dans IntelliJ (Spring Boot + MySQL).
-Ensuite, nous avons intégré ce code dans Next.js afin d’obtenir davantage de flexibilité et une meilleure expérience utilisateur.
-Par ailleurs, nous avons  améliorer le design et l’ergonomie de notre plateforme avec Figma.
+# 🎓 E-Learning Platform
 
- Aperçu des réalisations
-Backend : gestion des cours, modules, leçons, inscriptions et quiz (Spring Boot).
+A modern full-stack e-learning platform designed to provide an interactive and scalable learning experience.
 
-Base de données : stockage des utilisateurs, progression et résultats (MySQL).
+---
 
-Frontend : interface utilisateur dynamique et responsive (Next.js).
+## 📌 Overview
 
-Design : prototype et maquette graphique (Figma).
+This project is a web-based **Learning Management System (LMS)** that allows users to access courses, track progress, and interact with educational content in a structured way.
+
+E-learning platforms enable users to learn anytime and anywhere using digital devices, making education more flexible and accessible. :contentReference[oaicite:0]{index=0}
+
+---
+
+## 🚀 Features
+
+### 👤 User Features
+- Browse available courses
+- Enroll in courses
+- Track learning progress
+- Take quizzes and view results
+
+### 🧑‍💼 Admin / Back Office
+- Manage courses, modules, and lessons
+- Handle user registrations
+- Monitor student progress
+- Manage quizzes and evaluations
+
+### 🎨 UI/UX
+- Responsive and modern interface
+- Improved user experience (UX)
+- Designed with Figma prototypes
+
+---
+
+## 🏗️ Architecture
+
+This project follows a **full-stack architecture**:
+
+### 🔹 Backend
+- Java / Spring Boot
+- RESTful API
+- Handles business logic and data processing
+
+### 🔹 Frontend
+- Next.js
+- Dynamic and responsive UI
+
+### 🔹 Database
+- MySQL
+- Stores users, courses, and progress data
+
+---
+
+## 🛠️ Technologies Used
+
+- Java (Spring Boot)
+- Next.js
+- MySQL
+- HTML / CSS / JavaScript
+- Figma (UI/UX Design)
+
+---
+
+## 📂 Project Structure
