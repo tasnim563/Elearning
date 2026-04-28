@@ -8,7 +8,7 @@ A modern full-stack e-learning platform designed to provide an interactive and s
 
 This project is a web-based **Learning Management System (LMS)** that allows users to access courses, track progress, and interact with educational content in a structured way.
 
-E-learning platforms enable users to learn anytime and anywhere using digital devices, making education more flexible and accessible. :contentReference[oaicite:0]{index=0}
+E-learning platforms enable users to learn anytime and anywhere using digital devices, making education more flexible and accessible. 
 
 ---
 
