@@ -3,22 +3,35 @@ package com.fst.elearning.controller.api;
 import com.fst.elearning.entity.Cours;
 import com.fst.elearning.entity.Lecon;
 import com.fst.elearning.entity.Module;
+import com.fst.elearning.entity.Utilisateur;
 import com.fst.elearning.repository.CoursRepository;
+import com.fst.elearning.repository.UtilisateurRepository;
+import com.fst.elearning.service.ProgressionService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/courses")
 public class CourseApiController {
 
     private final CoursRepository coursRepository;
+    private final UtilisateurRepository utilisateurRepository;
+    private final ProgressionService progressionService;
 
-    public CourseApiController(CoursRepository coursRepository) {
+    public CourseApiController(
+            CoursRepository coursRepository,
+            UtilisateurRepository utilisateurRepository,
+            ProgressionService progressionService) {
         this.coursRepository = coursRepository;
+        this.utilisateurRepository = utilisateurRepository;
+        this.progressionService = progressionService;
     }
 
     @GetMapping
@@ -30,9 +43,10 @@ public class CourseApiController {
     }
 
     @GetMapping("/{id}")
-    public CourseDetailDto getCourse(@PathVariable Long id) {
+    public CourseDetailDto getCourse(@PathVariable Long id, Authentication authentication) {
         Cours cours = coursRepository.findWithModulesById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Course not found"));
+        Set<Long> completedLessonIds = completedLessonIds(authentication);
 
         List<ModuleDto> modules = cours.getModules() == null ? List.of() : cours.getModules().stream()
                 .sorted(Comparator.comparingInt(Module::getOrdre))
@@ -48,7 +62,8 @@ public class CourseApiController {
                                         lesson.getTitre(),
                                         lesson.getContenu(),
                                         lesson.getOrdre(),
-                                        lesson.getDureeMin()
+                                        lesson.getDureeMin(),
+                                        completedLessonIds.contains(lesson.getId())
                                 ))
                                 .toList()
                 ))
@@ -63,6 +78,21 @@ public class CourseApiController {
                 cours.getImageUrl(),
                 modules
         );
+    }
+
+    private Set<Long> completedLessonIds(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return Set.of();
+        }
+
+        return utilisateurRepository.findByEmail(authentication.getName())
+                .map(Utilisateur::getId)
+                .map(progressionService::leconsCompletees)
+                .orElse(List.of())
+                .stream()
+                .filter(progress -> progress.getLecon() != null)
+                .map(progress -> progress.getLecon().getId())
+                .collect(Collectors.toSet());
     }
 
     private static CourseCardDto toCardDto(Cours cours) {
@@ -111,7 +141,7 @@ public class CourseApiController {
             String titre,
             String contenu,
             int ordre,
-            int dureeMin
+            int dureeMin,
+            boolean completee
     ) {}
 }
-

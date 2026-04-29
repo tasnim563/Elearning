@@ -5,7 +5,6 @@ import com.fst.elearning.entity.Lecon;
 import com.fst.elearning.entity.Module;
 import com.fst.elearning.entity.Niveau;
 import com.fst.elearning.entity.Role;
-import com.fst.elearning.entity.Utilisateur;
 import com.fst.elearning.repository.CoursRepository;
 import com.fst.elearning.repository.LeconRepository;
 import com.fst.elearning.repository.ModuleRepository;
@@ -28,17 +27,23 @@ public class BackOfficeController {
     private final ModuleRepository moduleRepository;
     private final LeconRepository leconRepository;
     private final UtilisateurRepository utilisateurRepository;
+    private final com.fst.elearning.repository.InscriptionRepository inscriptionRepository;
+    private final com.fst.elearning.service.MarkdownService markdownService;
 
     public BackOfficeController(
             CoursRepository coursRepository,
             ModuleRepository moduleRepository,
             LeconRepository leconRepository,
-            UtilisateurRepository utilisateurRepository
+            UtilisateurRepository utilisateurRepository,
+            com.fst.elearning.repository.InscriptionRepository inscriptionRepository,
+            com.fst.elearning.service.MarkdownService markdownService
     ) {
         this.coursRepository = coursRepository;
         this.moduleRepository = moduleRepository;
         this.leconRepository = leconRepository;
         this.utilisateurRepository = utilisateurRepository;
+        this.inscriptionRepository = inscriptionRepository;
+        this.markdownService = markdownService;
     }
 
     @GetMapping("/admin")
@@ -186,9 +191,13 @@ public class BackOfficeController {
                 .flatMap(course -> course.getModules() == null ? java.util.stream.Stream.empty() : course.getModules().stream())
                 .flatMap(module -> module.getLecons() == null ? java.util.stream.Stream.empty() : module.getLecons().stream())
                 .count();
+        
+        long totalInscriptions = inscriptionRepository.count();
+        long completedInscriptions = inscriptionRepository.countByStatut(com.fst.elearning.entity.Statut.TERMINE);
+        double completionRate = totalInscriptions > 0 ? (double) completedInscriptions / totalInscriptions * 100 : 0.0;
 
         model.addAttribute("mode", mode);
-        model.addAttribute("stats", new Stats(courses.size(), moduleCount, lessonCount, courses.stream().filter(Cours::isActif).count()));
+        model.addAttribute("stats", new Stats(courses.size(), moduleCount, lessonCount, courses.stream().filter(Cours::isActif).count(), totalInscriptions, completionRate));
         model.addAttribute("courses", courseViews);
         model.addAttribute("courseOptions", courses.stream()
                 .map(course -> new OptionView(course.getId(), course.getTitre()))
@@ -226,7 +235,8 @@ public class BackOfficeController {
                         lesson.getTitre(),
                         lesson.getOrdre(),
                         lesson.getDureeMin(),
-                        preview(lesson.getContenu())
+                        preview(lesson.getContenu()),
+                        markdownService.parseMarkdown(lesson.getContenu())
                 ))
                 .toList();
 
@@ -263,7 +273,7 @@ public class BackOfficeController {
         return normalized.length() <= 120 ? normalized : normalized.substring(0, 117) + "...";
     }
 
-    public record Stats(long courseCount, long moduleCount, long lessonCount, long activeCourseCount) {}
+    public record Stats(long courseCount, long moduleCount, long lessonCount, long activeCourseCount, long totalInscriptions, double completionRate) {}
 
     public record OptionView(Long id, String label) {}
 
@@ -290,6 +300,7 @@ public class BackOfficeController {
             String titre,
             int ordre,
             int dureeMin,
-            String preview
+            String preview,
+            String markdownPreview
     ) {}
 }

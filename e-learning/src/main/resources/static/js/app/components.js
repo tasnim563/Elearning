@@ -59,11 +59,13 @@ export function LessonList(modules, onSelect, selectedLessonId) {
         ]));
         (moduleItem.lecons || []).forEach((lesson) => {
             const active = String(lesson.id) === String(selectedLessonId);
+            const done = Boolean(lesson.completee);
             items.push(el("button", {
-                class: `lesson-link ${active ? "active" : ""}`,
+                class: `lesson-link ${active ? "active" : ""} ${done ? "done" : ""}`,
                 type: "button",
                 onClick: () => onSelect(lesson)
             }, [
+                el("span", { class: "lesson-link-state", "aria-hidden": "true" }, [done ? "✓" : String(lesson.ordre || "")]),
                 el("span", { class: "lesson-link-title" }, [lesson.titre || "Lecon"]),
                 el("span", { class: "lesson-link-meta" }, [`${lesson.dureeMin || 0} min`])
             ]));
@@ -136,4 +138,3 @@ export function ResultScreen(score, total, onRestart) {
         el("button", { type: "button", class: "button-primary compact-button", onClick: onRestart }, ["Recommencer"])
     ]);
 }
-

@@ -94,6 +94,7 @@
         <p>Un clic et vous ajoutez ce cours a votre parcours d'apprentissage.</p>
         
         <form th:action="@{/inscrire}" method="post">
+            <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
             <input type="hidden" name="cours.id" th:value="${cours.id}"/>
             <button class="btn-primary" type="submit">S'inscrire maintenant</button>
         </form>

@@ -4,497 +4,140 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>e-learn Fst - Plateforme d'apprentissage</title>
+    <link rel="stylesheet" th:href="@{/css/design-system.css}">
     <link rel="stylesheet" th:href="@{/css/site.css}">
-    <style>
-        .modern-home {
-            background: #f8f9fa;
-            min-height: 100vh;
-        }
-        
-        .modern-header {
-            background: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 70px;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: #1a1a1a;
-            font-weight: 700;
-            font-size: 1.4rem;
-        }
-        
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-        }
-        
-        .nav-menu {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-        
-        .nav-menu a {
-            text-decoration: none;
-            color: #4a5568;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-        
-        .nav-menu a:hover {
-            color: #667eea;
-        }
-        
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .btn-outline {
-            padding: 10px 20px;
-            border: 2px solid #667eea;
-            border-radius: 8px;
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-outline:hover {
-            background: #667eea;
-            color: white;
-        }
-        
-        .btn-primary {
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-        }
-        
-        .categories-section {
-            background: white;
-            padding: 20px 0;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        
-        .categories-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .categories-list {
-            display: flex;
-            gap: 15px;
-            overflow-x: auto;
-            padding: 10px 0;
-            scrollbar-width: thin;
-        }
-        
-        .categories-list::-webkit-scrollbar {
-            height: 6px;
-        }
-        
-        .categories-list::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 3px;
-        }
-        
-        .categories-list::-webkit-scrollbar-thumb {
-            background: #cbd5e0;
-            border-radius: 3px;
-        }
-        
-        .category-item {
-            padding: 12px 24px;
-            background: #f7fafc;
-            border: 2px solid #e2e8f0;
-            border-radius: 25px;
-            text-decoration: none;
-            color: #4a5568;
-            font-weight: 500;
-            white-space: nowrap;
-            transition: all 0.3s ease;
-        }
-        
-        .category-item:hover {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
-        }
-        
-        .category-item.active {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
-        }
-        
-        .main-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-        
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-        
-        .section-title h2 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin: 0;
-        }
-        
-        .section-title p {
-            color: #718096;
-            margin: 5px 0 0;
-        }
-        
-        .courses-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 60px;
-        }
-        
-        .course-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-        }
-        
-        .course-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        }
-        
-        .course-image {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-        }
-        
-        .course-content {
-            padding: 20px;
-        }
-        
-        .course-tags {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-        
-        .course-tag {
-            padding: 4px 10px;
-            border-radius: 15px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        
-        .tag-category {
-            background: #fef3c7;
-            color: #92400e;
-        }
-        
-        .tag-level {
-            background: #e0e7ff;
-            color: #3730a3;
-        }
-        
-        .tag-free {
-            background: #d1fae5;
-            color: #065f46;
-        }
-        
-        .course-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #1a1a1a;
-            margin: 0 0 8px;
-            line-height: 1.3;
-        }
-        
-        .course-instructor {
-            color: #718096;
-            font-size: 0.9rem;
-            margin: 0 0 12px;
-        }
-        
-        .course-stats {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 12px;
-            font-size: 0.85rem;
-            color: #718096;
-        }
-        
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        
-        .rating {
-            color: #f59e0b;
-        }
-        
-        .course-price {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 12px;
-            border-top: 1px solid #e2e8f0;
-        }
-        
-        .price {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #059669;
-        }
-        
-        .enroll-btn {
-            padding: 8px 16px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .enroll-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-        }
-        
-        .hero-section {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 80px 20px;
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .hero-title {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-        }
-        
-        .hero-subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
-        }
-        
-        .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 50px;
-            margin-top: 40px;
-        }
-        
-        .hero-stat {
-            text-align: center;
-        }
-        
-        .hero-stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            display: block;
-        }
-        
-        .hero-stat-label {
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-        
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                height: auto;
-                padding: 15px 20px;
-            }
-            
-            .nav-menu {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 20px;
-            }
-            
-            .hero-title {
-                font-size: 2rem;
-            }
-            
-            .courses-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .hero-stats {
-                flex-direction: column;
-                gap: 20px;
-            }
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
-<body class="modern-home">
-    <header class="modern-header">
-        <div class="header-container">
-            <a href="/" class="logo">
-                <div class="logo-icon">📚</div>
-                <span>e-learn Fst</span>
+<body class="ux-body">
+    <nav class="nav-header" id="navbar">
+        <div class="container nav-inner">
+            <a href="/" class="brand-link">
+                <span class="brand-mark">EL</span>
+                <span class="brand-name">e-learn Fst</span>
             </a>
-            
-            <nav class="nav-menu">
-                <a href="/">Accueil</a>
-                <a href="/catalogue">Browse</a>
-                <a href="/progression">My Learning</a>
-                <a href="/admin" sec:authorize="hasRole('ADMIN')">Admin</a>
-                <a href="/manager" sec:authorize="hasRole('FORMATEUR')">Manager</a>
-            </nav>
-            
+
+            <ul class="nav-list">
+                <li><a href="/" class="nav-link active">Accueil</a></li>
+                <li><a href="/catalogue" class="nav-link">Catalogue</a></li>
+                <li><a href="/progression" class="nav-link">My Learning</a></li>
+                <li sec:authorize="hasRole('ADMIN')"><a href="/admin" class="nav-link">Admin</a></li>
+                <li sec:authorize="hasRole('FORMATEUR')"><a href="/manager" class="nav-link">Manager</a></li>
+            </ul>
+
             <div class="nav-actions">
-                <a href="/login" class="btn-primary" sec:authorize="!isAuthenticated()">Sign In</a>
-                <form th:action="@{/logout}" method="post" style="margin: 0;" sec:authorize="isAuthenticated()">
-                    <button type="submit" class="btn-outline" style="cursor: pointer;">Deconnexion</button>
+                <a href="/login" class="btn btn-primary" sec:authorize="!isAuthenticated()">Sign In</a>
+                <form th:action="@{/logout}" method="post" class="nav-form" sec:authorize="isAuthenticated()">
+                    <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                    <button type="submit" class="btn btn-secondary">Déconnexion</button>
                 </form>
             </div>
         </div>
-    </header>
-    
-    <section class="hero-section">
-        <div class="hero-content">
-            <h1 class="hero-title">Découvrez votre potentiel</h1>
-            <p class="hero-subtitle">Apprenez à votre rythme avec des cours de qualité professionnelle</p>
-            <div class="hero-stats">
-                <div class="hero-stat">
-                    <span class="hero-stat-number" th:text="${totalCourses}">150+</span>
-                    <span class="hero-stat-label">Cours disponibles</span>
-                </div>
-                <div class="hero-stat">
-                    <span class="hero-stat-number">50K+</span>
-                    <span class="hero-stat-label">Étudiants</span>
-                </div>
-                <div class="hero-stat">
-                    <span class="hero-stat-number">4.8</span>
-                    <span class="hero-stat-label">Note moyenne</span>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section class="categories-section">
-        <div class="categories-container">
-            <div class="categories-list">
-                <a href="/catalogue" class="category-item active">All</a>
-                <a href="/catalogue" class="category-item">Web Development</a>
-                <a href="/catalogue" class="category-item">Data Science</a>
-                <a href="/catalogue" class="category-item">Design</a>
-                <a href="/catalogue" class="category-item">Marketing</a>
-                <a href="/catalogue" class="category-item">Mobile Development</a>
-                <a href="/catalogue" class="category-item">Cloud Computing</a>
-                <a href="/catalogue" class="category-item">Business</a>
-            </div>
-        </div>
-    </section>
-    
-    <main class="main-content">
-        <div class="section-header">
-            <div class="section-title">
-                <h2>Cours populaires</h2>
-                <p>Découvrez les cours les plus appréciés par notre communauté</p>
-            </div>
-            <a href="/catalogue" class="btn-outline">Voir tout</a>
-        </div>
-        
-        <div class="courses-grid">
-            <a th:each="coursItem : ${featuredCourses}" th:href="@{/cours/{id}(id=${coursItem.id})}" class="course-card">
-                <div class="course-image" th:style="${coursItem.imageUrl != null and !#strings.isEmpty(coursItem.imageUrl) ? 'background-image: url(' + coursItem.imageUrl + '); background-size: cover; background-position: center;' : ''}"></div>
-                <div class="course-content">
-                    <div class="course-tags">
-                        <span class="course-tag tag-category" th:text="${coursItem.categorie != null ? coursItem.categorie : 'Development'}">Web Development</span>
-                        <span class="course-tag tag-level" th:text="${coursItem.niveau != null ? coursItem.niveau.name() : 'Beginner'}">Beginner</span>
-                        <span class="course-tag tag-free">FREE</span>
-                    </div>
-                    <h3 class="course-title" th:text="${coursItem.titre}">Complete Web Development Bootcamp</h3>
-                    <p class="course-instructor" th:text="${coursItem.formateur != null ? coursItem.formateur.nom : 'Sarah Johnson'}">Sarah Johnson</p>
-                    <div class="course-stats">
-                        <div class="stat-item rating">
-                            <span>⭐</span>
-                            <span>4.8</span>
-                        </div>
-                        <div class="stat-item">
-                            <span>👥</span>
-                            <span>45,230</span>
-                        </div>
-                        <div class="stat-item">
-                            <span>⏱️</span>
-                            <span>42h</span>
-                        </div>
-                    </div>
-                    <div class="course-price">
-                        <span class="price">FREE</span>
-                        <button class="enroll-btn">Start Now</button>
+    </nav>
+
+    <main>
+        <section class="home-hero">
+            <div class="container home-hero-grid">
+                <div class="home-hero-copy">
+                    <span class="eyebrow">Plateforme FST</span>
+                    <h1>Apprendre, pratiquer, progresser.</h1>
+                    <p>Des parcours courts, des quiz intégrés et un suivi clair pour avancer sans se perdre dans l'interface.</p>
+                    <div class="hero-actions">
+                        <a href="/catalogue" class="btn btn-primary">Explorer les cours</a>
+                        <a href="/progression" class="btn btn-secondary">Voir ma progression</a>
                     </div>
                 </div>
-            </a>
-        </div>
+
+                <div class="hero-preview" aria-label="Aperçu de la plateforme">
+                    <div class="preview-top">
+                        <span>Parcours en cours</span>
+                        <strong>68%</strong>
+                    </div>
+                    <div class="preview-track"><span style="width: 68%;"></span></div>
+                    <div class="preview-lesson">
+                        <span class="preview-dot"></span>
+                        <div>
+                            <strong>Spring Boot</strong>
+                            <p>Quiz final disponible</p>
+                        </div>
+                    </div>
+                    <div class="preview-grid">
+                        <div><strong>12</strong><span>leçons</span></div>
+                        <div><strong>4</strong><span>quiz</span></div>
+                        <div><strong>3h</strong><span>temps</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="metric-band container">
+            <div class="metric-card">
+                <strong th:text="${totalCourses}">150+</strong>
+                <span>Cours disponibles</span>
+            </div>
+            <div class="metric-card">
+                <strong>50K+</strong>
+                <span>Étudiants actifs</span>
+            </div>
+            <div class="metric-card">
+                <strong>4.8</strong>
+                <span>Note moyenne</span>
+            </div>
+            <div class="metric-card">
+                <strong>98%</strong>
+                <span>Satisfaction</span>
+            </div>
+        </section>
+
+        <section class="section-shell container">
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">Catalogue</span>
+                    <h2>Cours populaires</h2>
+                    <p>Les formations les plus demandées par la communauté.</p>
+                </div>
+                <a href="/catalogue" class="btn btn-secondary">Voir tout</a>
+            </div>
+
+            <div class="course-showcase">
+                <a th:each="coursItem : ${featuredCourses}" th:href="@{/cours/{id}(id=${coursItem.id})}" class="card course-tile">
+                    <div class="course-tile-media" th:style="${coursItem.imageUrl != null and !#strings.isEmpty(coursItem.imageUrl) ? 'background-image: url(' + coursItem.imageUrl + ');' : ''}"></div>
+                    <div class="course-tile-body">
+                        <span class="badge badge-purple" th:text="${coursItem.categorie != null ? coursItem.categorie : 'Development'}">Web Development</span>
+                        <h3 th:text="${coursItem.titre}">Complete Web Development Bootcamp</h3>
+                        <p>
+                            <span th:text="${coursItem.niveau != null ? coursItem.niveau.name() : 'Beginner'}">Beginner</span>
+                            <span th:text="${coursItem.formateur != null ? ' / ' + coursItem.formateur.nom : ' / Expert'}"> / Expert</span>
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section class="section-shell container">
+            <div class="section-heading compact">
+                <div>
+                    <span class="eyebrow">Domaines</span>
+                    <h2>Des chemins clairs par compétence</h2>
+                </div>
+            </div>
+            <div class="domain-grid">
+                <div class="domain-item"><strong>Web</strong><span>Frontend, backend, API</span></div>
+                <div class="domain-item"><strong>Data</strong><span>SQL, analyse, décision</span></div>
+                <div class="domain-item"><strong>Design</strong><span>UX writing, interfaces</span></div>
+                <div class="domain-item"><strong>Cloud</strong><span>Déploiement, services</span></div>
+            </div>
+        </section>
     </main>
-    
-    <script type="module" th:src="@{/js/app/ambient.js}"></script>
+
+    <footer class="site-footer">
+        <p>© 2026 e-learn Fst. Tous droits réservés.</p>
+        <div>
+            <a href="#">À propos</a>
+            <a href="#">Contact</a>
+            <a href="#">Conditions</a>
+        </div>
+    </footer>
 </body>
 </html>

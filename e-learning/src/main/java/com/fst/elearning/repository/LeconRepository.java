@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface LeconRepository extends JpaRepository<Lecon, Long> {
     List<Lecon> findByModuleIdOrderByOrdreAsc(Long moduleId);
+    int countByModule_CoursId(Long coursId);
 }
 

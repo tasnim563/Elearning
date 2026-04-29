@@ -3,128 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultat Quiz - e-learn Fst</title>
+    <title>Résultat Quiz - e-learn Fst</title>
+    <link rel="stylesheet" th:href="@{/css/design-system.css}">
     <link rel="stylesheet" th:href="@{/css/site.css}">
+    <link rel="stylesheet" th:href="@{/css/quiz-interface.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        .modern-result {
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            min-height: 100vh;
-            color: white;
+        .result-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            animation: bounce 1s ease infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .result-score {
+            font-size: 4rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 1rem 0;
+        }
+        
+        .result-message {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        
+        .result-actions {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        
-        .result-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 24px;
-            padding: 50px;
-            max-width: 500px;
-            width: 100%;
-            text-align: center;
-        }
-        
-        .result-card h1 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin: 0 0 30px;
-        }
-        
-        .score-display {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 30px;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-        }
-        
-        .score-display span {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-bottom: 4px;
-        }
-        
-        .score-display strong {
-            font-size: 2.5rem;
-            font-weight: 700;
-        }
-        
-        .score-message {
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 30px;
-        }
-        
-        .actions {
-            display: flex;
-            gap: 16px;
+            gap: 1rem;
             justify-content: center;
             flex-wrap: wrap;
         }
-        
-        .btn-primary {
-            padding: 12px 24px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-        }
-        
-        .btn-outline {
-            padding: 12px 24px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-        }
-        
-        .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-        
-        @media (max-width: 768px) {
-            .result-card { padding: 30px 20px; }
-            .actions { flex-direction: column; }
-            .btn-primary, .btn-outline { width: 100%; text-align: center; }
-        }
     </style>
 </head>
-<body class="modern-result">
-    <div class="result-card">
-        <div class="score-display">
-            <span>Score</span>
-            <strong th:text="${score}">0</strong>
-        </div>
-        <h1>Quiz termine !</h1>
-        <p class="score-message" th:if="${score >= 80}">Excellent travail ! Vous maitrisez ce sujet.</p>
-        <p class="score-message" th:if="${score >= 50 and score < 80}">Bon effort ! Encore un peu de pratique et vous serez parfait.</p>
-        <p class="score-message" th:if="${score < 50}">Continuez a apprendre ! Revisitez les lecons et reessayez.</p>
-        
-        <div class="actions">
-            <a class="btn-primary" th:href="@{/catalogue}">Retour au catalogue</a>
-            <a class="btn-outline" th:href="@{/progression}">Ma progression</a>
+<body>
+    
+    <!-- Result Container -->
+    <div class="quiz-container">
+        <div class="quiz-wrapper" style="text-align: center;">
+            <!-- Result Icon -->
+            <div class="result-icon" th:if="${score >= 80}">🎉</div>
+            <div class="result-icon" th:if="${score >= 50 and score < 80}">👍</div>
+            <div class="result-icon" th:if="${score < 50}">💪</div>
+            
+            <!-- Result Title -->
+            <h1 class="quiz-title">Quiz terminé !</h1>
+            
+            <!-- Score Display -->
+            <div class="result-score" th:text="${score} + '%'">80%</div>
+            
+            <!-- Result Message -->
+            <p class="result-message" th:if="${score >= 80}">Excellent travail ! Vous maîtrisez ce sujet.</p>
+            <p class="result-message" th:if="${score >= 50 and score < 80}">Bon effort ! Encore un peu de pratique et vous serez parfait.</p>
+            <p class="result-message" th:if="${score < 50}">Continuez à apprendre ! Revisitez les leçons et réessayez.</p>
+            
+            <!-- Actions -->
+            <div class="result-actions">
+                <a th:href="@{/catalogue}" class="btn-futuristic">Retour au catalogue</a>
+                <a th:href="@{/progression}" class="btn-outline-neon">Ma progression</a>
+            </div>
         </div>
     </div>
+    
+    <script th:src="@{/js/futuristic-interactions.js}"></script>
 </body>
 </html>
