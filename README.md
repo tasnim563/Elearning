@@ -1,62 +1,57 @@
-# 🎓 E-Learning Platform
+# 🎓 InkAcademy – Plateforme E-Learning
 
-A modern full-stack e-learning platform designed to provide an interactive and scalable learning experience.
+InkAcademy is a modern full-stack e-learning platform built with **Spring Boot 3, Thymeleaf, and MySQL**, designed to deliver an interactive, modular, and scalable learning experience.  
+Instructors can publish courses structured into modules and lessons, while learners can enroll, track their progress in real time, and take automatically graded quizzes.  
+All user interfaces were prototyped in **Figma** and implemented in **IntelliJ IDEA**, ensuring seamless synchronization between backend and frontend.
 
 ---
 
 ## 📌 Overview
 
-This project is a web-based **Learning Management System (LMS)** that allows users to access courses, track progress, and interact with educational content in a structured way.
+InkAcademy is a modern full-stack **Learning Management System (LMS)** developed with **Spring Boot 3, Thymeleaf, and MySQL**, designed to provide an interactive, modular, and scalable learning experience.  
 
-E-learning platforms enable users to learn anytime and anywhere using digital devices, making education more flexible and accessible. 
+The platform allows instructors to publish courses structured into modules and lessons, while learners can enroll, track their progress in real time, and take automatically graded quizzes.  
 
----
+By leveraging a **design-first methodology with Figma** and implementing the backend in **IntelliJ IDEA**, InkAcademy ensures seamless synchronization between backend stability and frontend interactivity, making education more flexible and accessible anytime, anywhere.
+
 
 ## 🚀 Features
 
 ### 👤 User Features
-- Browse available courses
+- Browse the course catalog
 - Enroll in courses
-- Track learning progress
+- Track learning progress in real time (%)
 - Take quizzes and view results
 
-### 🧑‍💼 Admin / Back Office
+### 🧑‍💼 Instructor / Admin Features
 - Manage courses, modules, and lessons
-- Handle user registrations
+- Handle learner registrations
 - Monitor student progress
-- Manage quizzes and evaluations
+- Create and manage quizzes with automatic grading
 
 ### 🎨 UI/UX
-- Responsive and modern interface
-- Improved user experience (UX)
-- Designed with Figma prototypes
-
----
+- Modern and responsive interface (Bootstrap 5 + Thymeleaf)
+- Enhanced user experience (UX)
+- Designed with **Figma prototypes** before implementation
 
 ## 🏗️ Architecture
 
 This project follows a **full-stack architecture**:
 
 ### 🔹 Backend
-- Java / Spring Boot
-- RESTful API
-- Handles business logic and data processing
+- Java / Spring Boot 3
+- Spring MVC + Service Layer
+- Business logic and data processing
+- Role-based authentication with Spring Security (Admin, Trainer, Learner)
 
 ### 🔹 Frontend
-- Next.js
+- Thymeleaf 3 + Bootstrap 5
 - Dynamic and responsive UI
+- Templates designed from Figma prototypes
 
 ### 🔹 Database
-- MySQL
-- Stores users, courses, and progress data
+- MySQL 8 + Spring Data JPA
+- Stores users, courses, modules, lessons, progress, and quiz results
 
----
-
-## 🛠️ Technologies Used
-
-- Java (Spring Boot)
-- Next.js
-- MySQL
-- HTML / CSS / JavaScript
 - Figma (UI/UX Design)
 
